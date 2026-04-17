@@ -13,7 +13,9 @@ engine = create_async_engine(
     DATABASE_URL,
     echo=settings.DEBUG,
     future=True,
-    # SQLite-specific: allow concurrent access
+    # SQLite-specific: allow concurrent access from asyncio tasks.
+    # This is safe here because aiosqlite serialises all operations internally
+    # and SQLAlchemy's async sessionmaker ensures each request gets its own session.
     connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {},
 )
 

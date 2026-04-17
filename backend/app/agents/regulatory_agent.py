@@ -162,9 +162,9 @@ class RegulatoryAgent(BaseAgent):
             category = item.get("category") or ""
             product_name = (item.get("product_name") or "").lower()
 
-            # Defence sector
+            # Defense sector
             if "defence" in product_name or "defense" in product_name:
-                flags.append(f"Defence-related product detected: '{item.get('product_name')}'")
+                flags.append(f"Defense-related product detected: '{item.get('product_name')}'")
                 risk_score = max(risk_score, 0.7)
 
             # Pharma/biotech dual-use

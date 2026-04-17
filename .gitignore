@@ -1,9 +1,16 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 *.db
 test_reports/
 .env
 reports/
 node_modules/
 build/
+dist/
+.pytest_cache/
+*.egg-info/
+.eggs/
+*.log
+.DS_Store

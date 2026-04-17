@@ -16,7 +16,7 @@ class OrderItemSchema(BaseModel):
 class OrderCreate(BaseModel):
     customer_name: str = Field(min_length=2, max_length=255)
     customer_country: str = Field(min_length=2, max_length=100)
-    customer_email: str = Field(min_length=5, max_length=255)
+    customer_email: EmailStr
     items: List[OrderItemSchema] = Field(min_length=1)
     total_amount: float = Field(ge=0)
     currency: str = Field(default="USD", max_length=10)

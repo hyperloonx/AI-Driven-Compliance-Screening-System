@@ -41,9 +41,9 @@ async def test_create_order_invalid_email(client):
         "total_amount": 10.0,
         "currency": "USD",
     }
-    # Our schema uses plain str for email, so creation succeeds with any string
+    # Schema uses EmailStr, so invalid emails are rejected with 422
     resp = await client.post("/api/v1/orders", json=order)
-    assert resp.status_code == 201
+    assert resp.status_code == 422
 
 
 @pytest.mark.asyncio
