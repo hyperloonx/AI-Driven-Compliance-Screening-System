@@ -107,7 +107,9 @@ export const reportsApi = {
 export const createWebSocket = (orderId: string, onMessage: (update: ScreeningUpdate) => void): WebSocket => {
   const ws = new WebSocket(`${WS_BASE}/api/v1/orders/ws/${orderId}`);
   ws.onmessage = (e) => {
-    try { onMessage(JSON.parse(e.data)); } catch {}
+    try { onMessage(JSON.parse(e.data)); } catch (err) {
+      console.warn('WebSocket message parse error:', err);
+    }
   };
   return ws;
 };

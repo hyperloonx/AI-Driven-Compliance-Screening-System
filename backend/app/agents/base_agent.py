@@ -1,7 +1,7 @@
 """Base agent class shared by all compliance agents."""
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from app.config import settings
 
 
@@ -30,7 +30,7 @@ class BaseAgent(ABC):
             "risk_score": round(min(max(risk_score, 0.0), 1.0), 4),
             "findings": findings,
             "flags": flags or [],
-            "screened_at": datetime.utcnow().isoformat(),
+            "screened_at": datetime.now(timezone.utc).isoformat(),
             "mode": self.mode,
         }
 

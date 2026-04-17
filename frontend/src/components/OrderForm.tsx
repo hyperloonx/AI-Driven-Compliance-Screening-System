@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ordersApi, OrderCreate, OrderItem } from '../services/api';
 
 const emptyItem = (): OrderItem => ({
-  product_id: `PRD-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
+  product_id: `PRD-${crypto.randomUUID().slice(0, 8).toUpperCase()}`,
   product_name: '',
   quantity: 1,
   unit_price: 0,

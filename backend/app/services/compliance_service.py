@@ -5,7 +5,7 @@ and broadcasts real-time WebSocket updates.
 import asyncio
 import json
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional, Set
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -53,7 +53,7 @@ class ComplianceService:
 
         # Update order status to SCREENING
         order.status = "SCREENING"
-        order.updated_at = datetime.utcnow()
+        order.updated_at = datetime.now(timezone.utc)
         db.add(order)
         await db.flush()
 
@@ -61,7 +61,7 @@ class ComplianceService:
             "order_id": order.id,
             "status": "SCREENING",
             "message": "Compliance screening started",
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
         order_data = {
@@ -82,21 +82,21 @@ class ComplianceService:
                 "agent": agent,
                 "message": message,
                 "progress": pct,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             })
 
         try:
             result = await self.orchestrator.run_screening(order_data, progress_callback)
         except Exception as exc:
             order.status = "ERROR"
-            order.updated_at = datetime.utcnow()
+            order.updated_at = datetime.now(timezone.utc)
             db.add(order)
             await db.flush()
             await _broadcast(order.id, {
                 "order_id": order.id,
                 "status": "ERROR",
                 "message": f"Screening error: {exc}",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             })
             raise
 
@@ -127,7 +127,7 @@ class ComplianceService:
         # Update order status
         final_status = result["overall_status"]
         order.status = final_status
-        order.updated_at = datetime.utcnow()
+        order.updated_at = datetime.now(timezone.utc)
         db.add(order)
         await db.flush()
 
@@ -136,7 +136,7 @@ class ComplianceService:
             "status": final_status,
             "overall_risk_score": result["overall_risk_score"],
             "message": f"Screening complete — {final_status}",
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
         return result

@@ -4,7 +4,7 @@ and provide a WebSocket endpoint for real-time screening updates.
 """
 import uuid
 import asyncio
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, WebSocket, WebSocketDisconnect
@@ -22,7 +22,7 @@ compliance_service = ComplianceService()
 
 
 def _generate_order_number() -> str:
-    ts = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
     suffix = str(uuid.uuid4())[:6].upper()
     return f"ORD-{ts}-{suffix}"
 
@@ -44,8 +44,8 @@ async def create_order(
         total_amount=order_in.total_amount,
         currency=order_in.currency,
         status="PENDING",
-        created_at=datetime.utcnow(),
-        updated_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc),
     )
     db.add(order)
     await db.flush()

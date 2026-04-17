@@ -1,2 +1,9 @@
-__pycache__/\n*.pyc\n*.pyo\n*.db\ntest_reports/\n.env\nreports/\nnode_modules/\nbuild/
-test_compliance.db\ntest_reports/\n*.db
+__pycache__/
+*.pyc
+*.pyo
+*.db
+test_reports/
+.env
+reports/
+node_modules/
+build/

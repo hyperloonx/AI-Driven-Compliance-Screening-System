@@ -4,7 +4,7 @@ product restrictions, financial regulations, and industry-specific rules.
 """
 from typing import Dict, Any, List
 from app.agents.base_agent import BaseAgent
-from app.services.data_sources import check_hs_code, check_industry_risk, check_country_risk, _country_name_to_code  # type: ignore[attr-defined]
+from app.services.data_sources import check_hs_code, check_industry_risk, check_country_risk, _country_name_to_code
 
 
 # Countries subject to ITAR/EAR export restrictions (sampled)

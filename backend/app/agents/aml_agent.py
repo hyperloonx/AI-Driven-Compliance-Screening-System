@@ -4,7 +4,7 @@ Checks transaction patterns, customer identity, country risk, and velocity.
 """
 from typing import Dict, Any, List
 from app.agents.base_agent import BaseAgent
-from app.services.data_sources import check_country_risk, _country_name_to_code  # type: ignore[attr-defined]
+from app.services.data_sources import check_country_risk, _country_name_to_code
 
 
 # Thresholds

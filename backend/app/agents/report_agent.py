@@ -4,7 +4,7 @@ Report Generation Agent — produces structured JSON and PDF audit reports.
 import os
 import json
 from typing import Dict, Any, List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.agents.base_agent import BaseAgent
 from app.config import settings
@@ -42,7 +42,7 @@ class ReportAgent(BaseAgent):
         overall_status: str,
         overall_risk_score: float,
     ) -> Dict[str, Any]:
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         all_flags: List[str] = []
         for result in screening_results:
